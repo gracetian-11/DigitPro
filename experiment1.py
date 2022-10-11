@@ -18,7 +18,7 @@ for file in os.listdir(directory):
     df = df.drop(columns='5')
     data = np.array(df, dtype=np.float32)
     for row in range(len(data) - (WINDOW_SIZE + 1)):
-        dataset.append((data[row:row + WINDOW_SIZE], data[row:row + WINDOW_SIZE + 1][LABEL]))  # (data, label) pair
+        dataset.append((data[row:row + WINDOW_SIZE], data[row + WINDOW_SIZE + 1][LABEL]))  # (data, label) pair
     print("Processed " + f)
 print("Generating dataset... done! :)")
 

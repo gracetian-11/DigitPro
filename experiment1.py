@@ -1,7 +1,4 @@
-from cProfile import label
 import os
-from pyexpat import model
-from this import d
 import pandas as pd
 import numpy as np
 import math
@@ -9,6 +6,8 @@ import tensorflow as tf
 
 WINDOW_SIZE = 50  # number of time frames for one prediction
 LABEL = 15  # sensor 17 corresponds to index 15 after dropping sensor 6 due to missing information
+NUM_EPOCHS = 2  # specify number of epochs to train over
+BATCH_SIZE = 32  # specify batch size 
 
 # generate time series from csv data files
 directory = "db1"
@@ -44,49 +43,40 @@ model = tf.keras.Sequential([
     tf.keras.layers.Reshape([1, -1]),
 ])
 
-# separate features and labels 
-features = []
-labels = []
+# separate features and labels for training and testing datasets
+training_features, training_labels, testing_features, testing_labels = [], [], [], []
 for index in training_dataset: 
     window = dataset[index] 
-    features.append(window[0])
-    labels.append(window[1][15])
-features = np.array(features)
-labels = np.array(labels)
+    training_features.append(window[0])
+    training_labels.append(window[1])
+training_features = np.array(training_features)
+training_labels = np.array(training_labels)
+for index in testing_dataset: 
+    window = dataset[index] 
+    testing_features.append(window[0])
+    testing_labels.append(window[1])
+testing_features = np.array(testing_features)
+testing_labels = np.array(testing_labels)
 
-print("Compiling model...")
 # compile the model with L2 loss and Adam optimizer
+print("Compiling model...")
 model.compile(loss=tf.keras.losses.MeanSquaredError(),
                 optimizer=tf.keras.optimizers.Adam(),
                 metrics=[tf.keras.metrics.MeanAbsoluteError()])
 print("Compiling model... done! :)")
 
-NUM_EPOCHS = 2 # specify number of epochs to train over
-BATCH_SIZE = 32 # specify batch size 
-
-print("Training Model...")
-history = model.fit(features, labels, batch_size=BATCH_SIZE, epochs = NUM_EPOCHS)
-print("Training Model... done! :)")
+print("Training model...")
+history = model.fit(training_features, training_labels, batch_size=BATCH_SIZE, epochs=NUM_EPOCHS)
+print("Training model... done! :)")
 
 # separate features and labels 
-features = []
-labels = []
-for index in testing_dataset: 
-    window = dataset[index] 
-    features.append(window[0])
-    labels.append(window[1][15])
-features = np.array(features)
-labels = np.array(labels)
-
 print("Testing model...")
-results = model.evaluate(features, labels, batch_size=BATCH_SIZE)
+results = model.evaluate(testing_features, testing_labels, batch_size=BATCH_SIZE)
 print("Testing model... done! :)")
 print("test loss, test acc:", results)
 
 print("Generating predictions...")
-predictions = model.predict(features[:10])
+predictions = model.predict(testing_features[:10])
+print("Predictions: ", predictions)
+print("Ground Truth: ", testing_labels[:10])
 print("Generating predictions... done! :)")
-print("Predictions: ")
-print(predictions)
-print("Ground Truth: ")
-print(labels[:10])

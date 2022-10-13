@@ -1,4 +1,5 @@
 .DS_store
+__pycache__
 db1
 *.zip
 *.csv

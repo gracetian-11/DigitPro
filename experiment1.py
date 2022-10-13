@@ -1,13 +1,11 @@
 import os
-from readline import append_history_file
-from tabnanny import verbose
 import pandas as pd
 import numpy as np
 import math
 import tensorflow as tf
 import normalize
 
-LABEL = 15  # sensor 17 corresponds to index 15 after dropping sensor 6 due to missing information
+LABEL = 15  # sensor 17 corresponds to index 14 after dropping sensor 6 and row numbers due to missing information
 WINDOW_SIZE = 50  # number of time frames for one prediction
 NUM_EPOCHS = 1  # specify number of epochs to train over
 BATCH_SIZE = 32  # specify batch size 
@@ -20,22 +18,19 @@ file_count = 0 # counter for files to be processed
 subject_norm_vals = {} # dicitonary to store max/min values for each subject data for unscaling data 
 print("Generating dataset...")
 for file in os.listdir(directory):
-    if file_count == 1: break
     subject = file.split('_')[0][1:]
     f = os.path.join(directory, file)
     df = pd.read_csv(f)
     df = df.drop(columns='5')
     df = df.drop(columns='Unnamed: 0')
-    #print(df)
     data = np.array(df, dtype=np.float32)
     scaled_data, data_min, data_max = normalize.scale_to_range(data, -1, 1)
     subject_norm_vals[subject] = (data_min, data_max) 
-    print(data_min, data_max)
     for row in range(len(data) - (WINDOW_SIZE + 1)):
         dataset.append((np.delete(data[row:row + WINDOW_SIZE], LABEL, 1), data[row + WINDOW_SIZE + 1][LABEL], subject))  # (data, label, subject) pair
         scaled_dataset.append((np.delete(scaled_data[row:row + WINDOW_SIZE], LABEL, 1), scaled_data[row + WINDOW_SIZE + 1][LABEL], subject))  # scaled (data, label, subject) pair
     print("Processed " + f)
-    file_count+=1
+    break
 print("Generating dataset... done! :)")
 
 # create training and testing datasets from scaled_dataset
@@ -74,7 +69,7 @@ for index in testing_dataset:
 testing_features = np.array(testing_features)
 testing_labels = np.array(testing_labels)
 
-# compile the model with L2 loss and Adam optimizer
+# compile the model with L1 loss and Adam optimizer
 print("Compiling model...")
 model.compile(loss=tf.keras.losses.MeanAbsoluteError(),
                 optimizer=tf.keras.optimizers.Adam(),
@@ -85,7 +80,6 @@ print("Training model...")
 history = model.fit(training_features, training_labels, batch_size=BATCH_SIZE, epochs=NUM_EPOCHS)
 print("Training model... done! :)")
 
-# separate features and labels 
 print("Testing model...")
 results = model.evaluate(testing_features, testing_labels, batch_size=BATCH_SIZE, verbose=0)
 print("Testing model... done! :)")
@@ -95,17 +89,10 @@ print("Generating predictions...")
 predictions = model.predict(testing_features[:20], verbose=0)
 unscaled_predictions = []
 unscaled_testing_labels = [] 
-check = [] 
 for p in range(len(predictions)):
     norm_vals = subject_norm_vals[testing_subjects[p]]
     unscaled_predictions.append(normalize.unscale_from_range(predictions[p], norm_vals[0], norm_vals[1], -1, 1))
     unscaled_testing_labels.append(normalize.unscale_from_range(testing_labels[p], norm_vals[0], norm_vals[1], -1, 1))
-    check.append(testing_labels[p])
-
 print("Predictions: ", [p[0][0] for p in unscaled_predictions])
-#print("Scaled Testing Labels: ", check)
 print("Ground Truth", unscaled_testing_labels)
-
-# print("Predictions: ", normalize.unscale_from_range(predictions, dataset, -1, 1))
-# print("Ground Truth: ", normalize.unscale_from_range(testing_labels[:10], dataset, -1, 1))
 print("Generating predictions... done! :)")

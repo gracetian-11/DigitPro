@@ -10,4 +10,6 @@ Ground Truth [-10.46429271082161, 1.415715482977248, -13.704297188234705, -7.224
 
 Experiment 2: Due to unsatisfactory results of Experiment 1, we simplify our problem further by reducing the problem to one of classification, in which each class is defined to be a range of 10 degrees. As in Experiment 1, we use a window size of 50 time frames and hide information on sensor 17. We use a simple MLP network and train and predict the angle of sensor 17 on subject 10 in db1.
 
-Experiment 2 Results:
+Experiment 2 Results: Due to a redefinition of the problem, Experiment 2 was never completed. 
+
+Experiment 3: This experiment tests the hypothesis that the unsatisfactory results seen in Experiment 1 were due to the data from sensor 17 to be highly biased. To solve this, Experiment 1 is rerun using sensors 8, 10, and 14 to predict value for sensor 5 at the first time frame after the given input

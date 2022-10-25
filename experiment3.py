@@ -5,7 +5,7 @@ import math
 import tensorflow as tf
 import normalize
 
-LABEL = 15  # sensor 17 corresponds to index 14 after dropping sensor 6 and row numbers due to missing information
+LABEL = 0  # sensor 5 corresponds to index 0 after dropping other sensors and row numbers due to missing information
 WINDOW_SIZE = 100  # number of time frames for one prediction
 NUM_EPOCHS = 1 # specify number of epochs to train over
 BATCH_SIZE = 32  # specify batch size 
@@ -23,7 +23,8 @@ for file in os.listdir(directory):
     f = os.path.join(directory, file)
     df = pd.read_csv(f)
     df = df.drop(columns='5')
-    df = df.drop(columns='Unnamed: 0')
+    df = df.drop(columns=['Unnamed: 0', '0', '1', '2', '3', '6', '8', '10', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21'])
+    
     data = np.array(df, dtype=np.float32)
     scaled_data, data_min, data_max = normalize.scale_to_range(data, -1, 1)
     subject_norm_vals[subject] = (data_min, data_max) 
@@ -47,8 +48,8 @@ print("Generating training and testing datasets... done! :)")
 model = tf.keras.Sequential([
     # Shape: (time, features) => (time*features)
     tf.keras.layers.Flatten(),
-    tf.keras.layers.Dense(units=32, activation='tanh'),
-    tf.keras.layers.Dense(units=32, activation='tanh'),
+    tf.keras.layers.Dense(units=250, activation='tanh'),
+    tf.keras.layers.Dense(units=250, activation='tanh'),
     tf.keras.layers.Dense(units=1, activation='tanh'),
     # Add back the time dimension.
     # Shape: (outputs) => (1, outputs)
@@ -71,6 +72,7 @@ for index in testing_dataset:
     testing_subjects.append(window[2])
 testing_features = np.array(testing_features)
 testing_labels = np.array(testing_labels)
+print("Len testing_features: ", testing_features.size)
 
 # compile the model with L1 loss and Adam optimizer
 print("Compiling model...")

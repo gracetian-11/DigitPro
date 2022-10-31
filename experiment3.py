@@ -101,3 +101,17 @@ for p in range(len(predictions)):
 print("Predictions: ", [p[0][0] for p in unscaled_predictions])
 print("Ground Truth", unscaled_testing_labels)
 print("Generating predictions... done! :)")
+
+print("Mean Testing Labels: ", sum(unscaled_testing_labels)/len(unscaled_testing_labels))
+
+count_30s = 0 
+count_else = 0 
+
+for label in unscaled_testing_labels: 
+    if label > 30 and label < 40: 
+        count_30s += 1
+    else: 
+        count_else += 1
+print("Count of 30s: ", count_30s)
+print("Count of else: ", count_else)
+print("Total Testing Labels: ", len(unscaled_testing_labels))

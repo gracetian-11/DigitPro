@@ -5,8 +5,8 @@ import math
 import tensorflow as tf
 import normalize
 
-LABEL = 15  # sensor 17 corresponds to index 14 after dropping sensor 6 and row numbers due to missing information
-WINDOW_SIZE = 100  # number of time frames for one prediction
+LABEL = 14  # sensor 17 corresponds to index 14 after dropping sensor 6 and row numbers due to missing information
+WINDOW_SIZE = 10  # number of time frames for one prediction
 NUM_EPOCHS = 1 # specify number of epochs to train over
 BATCH_SIZE = 32  # specify batch size 
 
@@ -35,6 +35,23 @@ for file in os.listdir(directory):
     print("Processed " + f)
     break
 print("Generating dataset... done! :)")
+
+dataset_labels = [val[1] for val in dataset]
+print("Mean Label: ", sum(dataset_labels)/len(dataset_labels))
+
+count_30 = 0 
+count_20 = 0 
+count_else = 0
+for label in dataset_labels: 
+    if label > 20 and label < 30: 
+        count_20 += 1
+    elif label > 30 and label < 40: 
+        count_30 += 1
+    else: 
+        count_else += 1
+print("30s: ", count_30)
+print("20s: ", count_20)
+print("Else: ", count_else)
 
 # create training and testing datasets from scaled_dataset
 print("Generating training and testing datasets...")

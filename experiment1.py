@@ -1,64 +1,14 @@
-import os
-import pandas as pd
-import numpy as np
-import math
+import data
 import tensorflow as tf
 import normalize
 
-LABEL = 14  # sensor 17 corresponds to index 14 after dropping sensor 6 and row numbers due to missing information
-WINDOW_SIZE = 10  # number of time frames for one prediction
-NUM_EPOCHS = 1 # specify number of epochs to train over
+LABEL = 14  # sensor 17 corresponds to index 15 after dropping sensor 6 due to missing information
+WINDOW_SIZE = 50  # number of time frames for one prediction
+NUM_EPOCHS = 1  # specify number of epochs to train over
 BATCH_SIZE = 32  # specify batch size 
 
-# generate time series from csv data files
-directory = "db1"
-dataset = [] # list of all (data, label) pairs
-scaled_dataset = [] # list of all scaled (data, label) pairs
-file_count = 0 # counter for files to be processed
-subject_norm_vals = {} # dicitonary to store max/min values for each subject data for unscaling data 
-print("Generating dataset...")
-for file in os.listdir(directory):
-    if file != "S7_E3_A1_angles.csv": continue
-    subject = file.split('_')[0][1:]
-    f = os.path.join(directory, file)
-    df = pd.read_csv(f)
-    df = df.drop(columns='5')
-    df = df.drop(columns='Unnamed: 0')
-    data = np.array(df, dtype=np.float32)
-    scaled_data, data_min, data_max = normalize.scale_to_range(data, -1, 1)
-    subject_norm_vals[subject] = (data_min, data_max) 
-    for row in range(len(data) - (WINDOW_SIZE + 1)):
-        if data[row+WINDOW_SIZE +1][LABEL] > 360 or data[row+WINDOW_SIZE +1][LABEL] < -360:
-            print(data[row+WINDOW_SIZE +1][LABEL])
-        dataset.append((np.delete(data[row:row + WINDOW_SIZE], LABEL, 1), data[row + WINDOW_SIZE + 1][LABEL], subject))  # (data, label, subject) pair
-        scaled_dataset.append((np.delete(scaled_data[row:row + WINDOW_SIZE], LABEL, 1), scaled_data[row + WINDOW_SIZE + 1][LABEL], subject))  # scaled (data, label, subject) pair
-    print("Processed " + f)
-    break
-print("Generating dataset... done! :)")
-
-dataset_labels = [val[1] for val in dataset]
-print("Mean Label: ", sum(dataset_labels)/len(dataset_labels))
-
-count_30 = 0 
-count_20 = 0 
-count_else = 0
-for label in dataset_labels: 
-    if label > 20 and label < 30: 
-        count_20 += 1
-    elif label > 30 and label < 40: 
-        count_30 += 1
-    else: 
-        count_else += 1
-print("30s: ", count_30)
-print("20s: ", count_20)
-print("Else: ", count_else)
-
-# create training and testing datasets from scaled_dataset
-print("Generating training and testing datasets...")
-random_data = np.random.permutation(len(scaled_dataset))
-cutoff = math.floor(len(scaled_dataset) * 0.8)
-training_dataset, testing_dataset = random_data[:cutoff], random_data[cutoff:]
-print("Generating training and testing datasets... done! :)")
+file = 'db1/S10_E3_A1_angles.csv'
+dataset = data.Data([file], WINDOW_SIZE, [LABEL])
 
 # define model for experiment 1
 model = tf.keras.Sequential([
@@ -72,47 +22,31 @@ model = tf.keras.Sequential([
     tf.keras.layers.Reshape([1, -1]),
 ])
 
-# separate features and labels for training and testing datasets
-training_features, training_labels, training_subjects, testing_features, testing_labels, testing_subjects = [], [], [], [], [], []
-for index in training_dataset: 
-    window = scaled_dataset[index] 
-    training_features.append(window[0])
-    training_labels.append(window[1])
-    training_subjects.append(window[2])
-training_features = np.array(training_features)
-training_labels = np.array(training_labels)
-for index in testing_dataset: 
-    window = scaled_dataset[index] 
-    testing_features.append(window[0])
-    testing_labels.append(window[1])
-    testing_subjects.append(window[2])
-testing_features = np.array(testing_features)
-testing_labels = np.array(testing_labels)
-
 # compile the model with L1 loss and Adam optimizer
 print("Compiling model...")
 model.compile(loss=tf.keras.losses.MeanSquaredError(),
                 optimizer=tf.keras.optimizers.Adam(),
                 metrics=[tf.keras.metrics.MeanAbsoluteError()])
 print("Compiling model... done! :)")
-
 print("Training model...")
-history = model.fit(training_features, training_labels, batch_size=BATCH_SIZE, epochs=NUM_EPOCHS)
+history = model.fit(dataset.training_features, dataset.training_labels, batch_size=BATCH_SIZE, epochs=NUM_EPOCHS)
 print("Training model... done! :)")
 
+# test model
 print("Testing model...")
-results = model.evaluate(testing_features, testing_labels, batch_size=BATCH_SIZE, verbose=0)
+results = model.evaluate(dataset.testing_features, dataset.testing_labels, batch_size=BATCH_SIZE, verbose=0)
 print("Testing model... done! :)")
-print("test loss, test acc:", results)
 
+# display predictions vs ground truth for 20 windows
 print("Generating predictions...")
-predictions = model.predict(testing_features[:20], verbose=0)
+print("Loss, Accuracy:", results)
+predictions = model.predict(dataset.testing_features, verbose=0)
 unscaled_predictions = []
 unscaled_testing_labels = [] 
 for p in range(len(predictions)):
-    norm_vals = subject_norm_vals[testing_subjects[p]]
+    norm_vals = dataset.file_norm_vals[dataset.testing_files[p]]
     unscaled_predictions.append(normalize.unscale_from_range(predictions[p], norm_vals[0], norm_vals[1], -1, 1))
-    unscaled_testing_labels.append(normalize.unscale_from_range(testing_labels[p], norm_vals[0], norm_vals[1], -1, 1))
-print("Predictions: ", [p[0][0] for p in unscaled_predictions])
-print("Ground Truth", unscaled_testing_labels)
+    unscaled_testing_labels.append(normalize.unscale_from_range(dataset.testing_labels[p], norm_vals[0], norm_vals[1], -1, 1))
+print("Predictions: ", [p[0][0] for p in unscaled_predictions[:20]])
+print("Ground Truth", [l[0] for l in unscaled_testing_labels[:20]])
 print("Generating predictions... done! :)")

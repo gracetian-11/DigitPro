@@ -6,7 +6,7 @@ import tensorflow as tf
 import normalize
 
 LABEL = 0  # sensor 5 corresponds to index 0 after dropping other sensors and row numbers due to missing information
-WINDOW_SIZE = 100  # number of time frames for one prediction
+WINDOW_SIZE = 50  # number of time frames for one prediction
 NUM_EPOCHS = 1 # specify number of epochs to train over
 BATCH_SIZE = 32  # specify batch size 
 
@@ -15,7 +15,7 @@ directory = "db1"
 dataset = [] # list of all (data, label) pairs
 scaled_dataset = [] # list of all scaled (data, label) pairs
 file_count = 0 # counter for files to be processed
-subject_norm_vals = {} # dicitonary to store max/min values for each subject data for unscaling data 
+subject_norm_vals = {} # dictionary to store max/min values for each subject data for unscaling data 
 print("Generating dataset...")
 for file in os.listdir(directory):
     if file != "S7_E3_A1_angles.csv": continue
@@ -32,7 +32,7 @@ for file in os.listdir(directory):
         if data[row+WINDOW_SIZE +1][LABEL] > 360 or data[row+WINDOW_SIZE +1][LABEL] < -360:
             print(data[row+WINDOW_SIZE +1][LABEL])
         dataset.append((np.delete(data[row:row + WINDOW_SIZE], LABEL, 1), data[row + WINDOW_SIZE + 1][LABEL], subject))  # (data, label, subject) pair
-        scaled_dataset.append((np.delete(scaled_data[row:row + WINDOW_SIZE], LABEL, 1), scaled_data[row + WINDOW_SIZE + 1][LABEL], subject))  # scaled (data, label, subject) pair
+        scaled_dataset.append((np.delete(scaled_data[row:row + WINDOW_SIZE], LABEL, 1), [scaled_data[row + WINDOW_SIZE + 1][LABEL]], subject))  # scaled (data, label, subject) pair
     print("Processed " + f)
     break
 print("Generating dataset... done! :)")
@@ -48,8 +48,8 @@ print("Generating training and testing datasets... done! :)")
 model = tf.keras.Sequential([
     # Shape: (time, features) => (time*features)
     tf.keras.layers.Flatten(),
-    tf.keras.layers.Dense(units=250, activation='tanh'),
-    tf.keras.layers.Dense(units=250, activation='tanh'),
+    tf.keras.layers.Dense(units=32, activation='tanh'),
+    tf.keras.layers.Dense(units=32, activation='tanh'),
     tf.keras.layers.Dense(units=1, activation='tanh'),
     # Add back the time dimension.
     # Shape: (outputs) => (1, outputs)
@@ -88,30 +88,16 @@ print("Training model... done! :)")
 print("Testing model...")
 results = model.evaluate(testing_features, testing_labels, batch_size=BATCH_SIZE, verbose=0)
 print("Testing model... done! :)")
-print("test loss, test acc:", results)
 
 print("Generating predictions...")
-predictions = model.predict(testing_features[:20], verbose=0)
+print("Loss, Accuracy:", results)
+predictions = model.predict(testing_features, verbose=0)
 unscaled_predictions = []
 unscaled_testing_labels = [] 
 for p in range(len(predictions)):
     norm_vals = subject_norm_vals[testing_subjects[p]]
     unscaled_predictions.append(normalize.unscale_from_range(predictions[p], norm_vals[0], norm_vals[1], -1, 1))
     unscaled_testing_labels.append(normalize.unscale_from_range(testing_labels[p], norm_vals[0], norm_vals[1], -1, 1))
-print("Predictions: ", [p[0][0] for p in unscaled_predictions])
-print("Ground Truth", unscaled_testing_labels)
+print("Predictions: ", [p[0][0] for p in unscaled_predictions[:20]])
+print("Ground Truth", [l[0] for l in unscaled_testing_labels[:20]])
 print("Generating predictions... done! :)")
-
-print("Mean Testing Labels: ", sum(unscaled_testing_labels)/len(unscaled_testing_labels))
-
-count_30s = 0 
-count_else = 0 
-
-for label in unscaled_testing_labels: 
-    if label > 30 and label < 40: 
-        count_30s += 1
-    else: 
-        count_else += 1
-print("Count of 30s: ", count_30s)
-print("Count of else: ", count_else)
-print("Total Testing Labels: ", len(unscaled_testing_labels))

@@ -1,5 +1,6 @@
 import datagen
 import models
+import os
 
 """
 EXPERIMENT 1
@@ -11,16 +12,16 @@ def experiment1():
     EXCLUDED_FEATURES = []
     LABEL = 14  # sensor 17
     WINDOW_SIZE = 50  # number of time frames for one prediction
-    NUM_EPOCHS = 1  # specify number of epochs to train over
+    NUM_EPOCHS = 10  # specify number of epochs to train over
     BATCH_SIZE = 32  # specify batch size 
 
     file = 'db1/S10_E3_A1_angles.csv'
     dataset = datagen.Parse([file], WINDOW_SIZE, EXCLUDED_FEATURES, [LABEL])
 
-    model = models.Phase1Model(dataset, BATCH_SIZE, NUM_EPOCHS)
-    model.compile()
+    model = models.MultiStepDense(dataset, BATCH_SIZE, NUM_EPOCHS)
     model.train()
     model.test()
+    model.displayResults()
 
 
 """
@@ -33,16 +34,16 @@ def experiment2():
     EXCLUDED_FEATURES = []
     LABEL = 14  # sensor 17
     WINDOW_SIZE = 50  # number of time frames for one prediction
-    NUM_EPOCHS = 1  # specify number of epochs to train over
+    NUM_EPOCHS = 10  # specify number of epochs to train over
     BATCH_SIZE = 32  # specify batch size
 
     file = 'db1/S7_E3_A1_angles.csv'
     dataset = datagen.Parse([file], WINDOW_SIZE, EXCLUDED_FEATURES, [LABEL])
 
-    model = models.Phase1Model(dataset, BATCH_SIZE, NUM_EPOCHS)
-    model.compile()
+    model = models.MultiStepDense(dataset, BATCH_SIZE, NUM_EPOCHS)
     model.train()
     model.test()
+    model.displayResults()
 
 
 """
@@ -55,16 +56,16 @@ def experiment3():
     EXCLUDED_FEATURES = []
     LABEL = 4  # sensor 7
     WINDOW_SIZE = 50  # number of time frames for one prediction
-    NUM_EPOCHS = 1  # specify number of epochs to train over
+    NUM_EPOCHS = 10  # specify number of epochs to train over
     BATCH_SIZE = 32  # specify batch size
 
     file = 'db1/S7_E3_A1_angles.csv'
     dataset = datagen.Parse([file], WINDOW_SIZE, EXCLUDED_FEATURES, [LABEL])
 
-    model = models.Phase1Model(dataset, BATCH_SIZE, NUM_EPOCHS)
-    model.compile()
+    model = models.MultiStepDense(dataset, BATCH_SIZE, NUM_EPOCHS)
     model.train()
     model.test()
+    model.displayResults()
 
 
 """
@@ -77,16 +78,16 @@ def experiment4():
     EXCLUDED_FEATURES = ['0', '1', '2', '3', '6', '8', '10', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21']
     LABEL = 0  # sensor 5
     WINDOW_SIZE = 50  # number of time frames for one prediction
-    NUM_EPOCHS = 1 # specify number of epochs to train over
+    NUM_EPOCHS = 10 # specify number of epochs to train over
     BATCH_SIZE = 32  # specify batch size 
 
     file = 'db1/S7_E3_A1_angles.csv'
     dataset = datagen.Parse([file], WINDOW_SIZE, EXCLUDED_FEATURES, [LABEL])
 
-    model = models.Phase1Model(dataset, BATCH_SIZE, NUM_EPOCHS)
-    model.compile()
+    model = models.MultiStepDense(dataset, BATCH_SIZE, NUM_EPOCHS)
     model.train()
     model.test()
+    model.displayResults()
 
 
 experiment1()

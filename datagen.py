@@ -15,6 +15,11 @@ class Parse:
         self.training_labels = []
         self.training_files = []
 
+        # validation
+        self.validation_features = []
+        self.validation_labels = []
+        self.validation_files = []
+
         # testing
         self.testing_features = []
         self.testing_labels = []
@@ -34,11 +39,13 @@ class Parse:
                 self.dataset.append((features, labels, file))
             print("Processed " + file)
 
-        # initialize training and testing datasets
-        print("Generating training and testing datasets...")
+        # split data into training, validation, and testing sets
+        print("Generating training, validation, and testing datasets...")
         random_data = np.random.permutation(len(self.dataset))
-        cutoff = math.floor(len(self.dataset) * 0.8)
-        self.training_dataset, self.testing_dataset = random_data[:cutoff], random_data[cutoff:]
+        cutoff1 = math.floor(len(self.dataset) * 0.6)
+        cutoff2 = math.floor(len(self.dataset) * 0.8)
+        self.training_dataset, self.validation_dataset, self.testing_dataset = random_data[:cutoff1], random_data[cutoff1:cutoff2], random_data[cutoff2:]
+        # create training set
         for index in self.training_dataset: 
             window = self.dataset[index] 
             self.training_features.append(window[0])
@@ -46,6 +53,15 @@ class Parse:
             self.training_files.append(window[2])
         self.training_features = np.array(self.training_features)
         self.training_labels = np.array(self.training_labels)
+        # create validation set
+        for index in self.validation_dataset:
+            window = self.dataset[index]
+            self.validation_features.append(window[0])
+            self.validation_labels.append(window[1])
+            self.validation_files.append(window[2])
+        self.validation_features = np.array(self.validation_features)
+        self.validation_labels = np.array(self.validation_labels)
+        # create testing set
         for index in self.testing_dataset: 
             window = self.dataset[index] 
             self.testing_features.append(window[0])

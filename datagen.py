@@ -4,7 +4,7 @@ import normalize
 import math
 
 class Parse:
-    def __init__(self, files, window_size, excluded_features, label_indices):
+    def __init__(self, files, window_size, excluded_features, label_indices, offset = 1):
         # dataset
         self.files = files
         self.file_norm_vals = {}
@@ -33,9 +33,9 @@ class Parse:
             data = np.array(df, dtype=np.float32)
             scaled_data, data_min, data_max = normalize.scale_to_range(data, -1, 1)
             self.file_norm_vals[file] = (data_min, data_max) 
-            for row in range(len(data) - (window_size + 1)):
+            for row in range(len(data) - (window_size + offset)):
                 features = np.delete(scaled_data[row:row + window_size], label_indices, 1)
-                labels = [scaled_data[row + window_size + 1][i] for i in label_indices]
+                labels = [scaled_data[row + window_size + offset][i] for i in label_indices]
                 self.dataset.append((features, labels, file))
             print("Processed " + file)
 

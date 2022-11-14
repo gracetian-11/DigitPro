@@ -33,7 +33,7 @@ class MultiStepDense:
         print("Generating predictions...")
         self.predictions = self.model.predict(self.dataset.testing_features, verbose=0)
 
-    def displayResults(self, num_to_display=20, error_margin=10):
+    def displayResults(self, verbose=True, num_to_display=20, error_margin=10):
         for i in range(len(self.model.metrics_names)):
             print(self.model.metrics_names[i] + ": " + str(self.results[i]))
         unscaled_predictions = []
@@ -52,6 +52,8 @@ class MultiStepDense:
             p = unscaled_predictions[i][0][0]
             l = unscaled_testing_labels[i][0]
             display_data.append([p, l, abs(p - l)])
-        print(tabulate(display_data, headers=['Predictions', 'Ground Truth', 'Error']))
+        if verbose:
+            print(tabulate(display_data, headers=['Predictions', 'Ground Truth', 'Error']))
         print("% predictions with error > " + str(error_margin) + ": " + str(count / len(self.predictions)))
+        return count / len(self.predictions)
         

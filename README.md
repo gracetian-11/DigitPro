@@ -1,7 +1,7 @@
 # DigitPro
 Machine Learning for Prosthetic Finger Kinematics
 
-## PHASE 1: 
+## PHASE 1 (Phil): 
 
 Our dataset is composed of all windows of 50 time frames for a single subject. We randomly select 80% of these windows for training and the remaining 20% for testing. We remove information corresponding to a single sensor and predict the value for this sensor at the first time frame after the given input.
 

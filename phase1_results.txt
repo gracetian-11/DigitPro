@@ -1,315 +1,197 @@
-RUNNING EXPERIMENT 1...
-Parsing data...
-Processed db1/S10_E3_A1_angles.csv
-Generating training, validation, and testing datasets...
-2022-11-03 23:12:14.884163: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  SSE4.1 SSE4.2 AVX AVX2 FMA
-To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
-Training model...
-Epoch 1/5
-4016/4016 [==============================] - 6s 1ms/step - loss: 0.0085 - mean_absolute_error: 0.0280
-Epoch 2/5
-4016/4016 [==============================] - 6s 1ms/step - loss: 2.6641e-04 - mean_absolute_error: 0.0125
-Epoch 3/5
-4016/4016 [==============================] - 6s 1ms/step - loss: 2.0418e-04 - mean_absolute_error: 0.0109
-Epoch 4/5
-4016/4016 [==============================] - 6s 1ms/step - loss: 1.8252e-04 - mean_absolute_error: 0.0102
-Epoch 5/5
-4016/4016 [==============================] - 6s 2ms/step - loss: 1.6381e-04 - mean_absolute_error: 0.0097
-Testing model...
-Generating predictions...
-loss: 0.00023933310876600444
-mean_absolute_error: 0.013083219528198242
-  Predictions    Ground Truth     Error
--------------  --------------  --------
-    -0.63446        -3.74619   3.11172
-     1.92752        -1.96408   3.8916
-     2.98581         3.38229   0.396484
-    -0.613983       -3.74619   3.1322
-     2.23782         0.709106  1.52872
-     6.84128         2.49124   4.35004
-     5.3187          3.38229   1.9364
-     3.44403         0.709106  2.73492
-     3.4281          0.709106  2.71899
-     3.47806        -1.82092   5.29898
-     1.60275        -0.181946  1.7847
-     1.49832        -3.74619   5.24451
-     6.65546         8.72864   2.07318
-    -1.6662         -4.63727   2.97107
-     4.14627         2.49124   1.65503
-    -0.177032       -3.74619   3.56915
-    -0.272614       -2.85513   2.58252
-     3.78598        -0.181946  3.96793
-     3.42163         0.709106  2.71252
-     7.39478         6.05548   1.33929
-% predictions with error > 10: 0.0037117445199243643
-(DigitPro) gracetian@Graces-MacBook-Pro DigitPro % python3 phase1.py
+PHASE 1
 
 RUNNING EXPERIMENT 1...
 Parsing data...
 Processed db1/S10_E3_A1_angles.csv
 Generating training, validation, and testing datasets...
-2022-11-03 23:14:18.770420: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  SSE4.1 SSE4.2 AVX AVX2 FMA
-To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
 Training model...
-Epoch 1/10
-4016/4016 [==============================] - 7s 2ms/step - loss: 0.0678 - mean_absolute_error: 0.1109
-Epoch 2/10
-4016/4016 [==============================] - 6s 2ms/step - loss: 2.8232e-04 - mean_absolute_error: 0.0129
-Epoch 3/10
-4016/4016 [==============================] - 6s 2ms/step - loss: 2.2708e-04 - mean_absolute_error: 0.0115
-Epoch 4/10
-4016/4016 [==============================] - 6s 2ms/step - loss: 1.8024e-04 - mean_absolute_error: 0.0102
-Epoch 5/10
-4016/4016 [==============================] - 6s 2ms/step - loss: 1.6001e-04 - mean_absolute_error: 0.0096
-Epoch 6/10
-4016/4016 [==============================] - 6s 2ms/step - loss: 1.5155e-04 - mean_absolute_error: 0.0094
-Epoch 7/10
-4016/4016 [==============================] - 7s 2ms/step - loss: 1.3873e-04 - mean_absolute_error: 0.0090
-Epoch 8/10
-4016/4016 [==============================] - 6s 2ms/step - loss: 1.3216e-04 - mean_absolute_error: 0.0088
-Epoch 9/10
-4016/4016 [==============================] - 6s 2ms/step - loss: 1.2735e-04 - mean_absolute_error: 0.0086
-Epoch 10/10
-4016/4016 [==============================] - 6s 2ms/step - loss: 1.2609e-04 - mean_absolute_error: 0.0086
 Testing model...
 Generating predictions...
-loss: 0.00016742711886763573
-mean_absolute_error: 0.010556569322943687
-  Predictions    Ground Truth       Error
--------------  --------------  ----------
-     5.60431         9.61972   4.01541
-     0.601685       -0.181946  0.78363
-    -2.27487         0.709106  2.98398
-    -5.15494        -3.74619   1.40875
-    -5.44312        -2.85513   2.58798
-    -7.03128        -3.74619   3.2851
-    -2.89359        -8.20151   5.30792
-     5.85107         9.61972   3.76865
-    -0.332672        2.49124   2.82391
-     5.11456         7.83759   2.72302
-     1.73499         1.60016   0.134827
-    10.3448         12.8771    2.53229
-    -4.74072        -2.85513   1.88559
-    -1.95963        -1.96408   0.00445557
-     6.38071         6.07748   0.303223
-     3.57062         6.94653   3.37592
-     4.58496         5.1644    0.579437
-     1.20749         4.27335   3.06586
-     6.95441        10.5108    3.55637
-     6.00031         7.83759   1.83728
-% predictions with error > 10: 0.002707939398183813
-(DigitPro) gracetian@Graces-MacBook-Pro DigitPro % python3 phase1.py
-
-RUNNING EXPERIMENT 1...
-Parsing data...
-Processed db1/S10_E3_A1_angles.csv
-Generating training, validation, and testing datasets...
-2022-11-03 23:17:23.843167: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  SSE4.1 SSE4.2 AVX AVX2 FMA
-To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
-Training model...
-Epoch 1/10
-4016/4016 [==============================] - 7s 2ms/step - loss: 0.0880 - mean_absolute_error: 0.1404
-Epoch 2/10
-4016/4016 [==============================] - 6s 2ms/step - loss: 2.7622e-04 - mean_absolute_error: 0.0127
-Epoch 3/10
-4016/4016 [==============================] - 7s 2ms/step - loss: 2.2341e-04 - mean_absolute_error: 0.0115
-Epoch 4/10
-4016/4016 [==============================] - 7s 2ms/step - loss: 1.9025e-04 - mean_absolute_error: 0.0106
-Epoch 5/10
-4016/4016 [==============================] - 7s 2ms/step - loss: 1.6820e-04 - mean_absolute_error: 0.0099
-Epoch 6/10
-4016/4016 [==============================] - 6s 2ms/step - loss: 1.5385e-04 - mean_absolute_error: 0.0095
-Epoch 7/10
-4016/4016 [==============================] - 6s 2ms/step - loss: 1.4152e-04 - mean_absolute_error: 0.0090
-Epoch 8/10
-4016/4016 [==============================] - 6s 2ms/step - loss: 1.3558e-04 - mean_absolute_error: 0.0089
-Epoch 9/10
-4016/4016 [==============================] - 7s 2ms/step - loss: 1.2522e-04 - mean_absolute_error: 0.0085
-Epoch 10/10
-4016/4016 [==============================] - 6s 2ms/step - loss: 1.1926e-04 - mean_absolute_error: 0.0083
-Testing model...
-Generating predictions...
-loss: 0.00014328467659652233
-mean_absolute_error: 0.009706837125122547
+loss: 0.00021826154261361808
+mean_absolute_error: 0.012831314466893673
   Predictions    Ground Truth     Error
 -------------  --------------  --------
-    6.32013          7.83759   1.51746
-   -6.34955         -3.74619   2.60336
-   -5.89447         -3.74619   2.14828
-   -4.81073         -3.74619   1.06454
-   -5.13425         -3.74619   1.38806
-    5.11417          6.05548   0.941315
-   -2.45544          0.709106  3.16455
-    7.86404         10.5108    2.64673
-   -5.45609         -6.41937   0.963287
-    1.85367          5.1644    3.31073
-    5.74377          7.83759   2.09381
-   -6.3504          -7.31042   0.960022
-    2.29858          2.46167   0.163086
-   -1.68091         -0.181946  1.49896
-    0.908325         2.49124   1.58292
-    5.17789          6.05548   0.877594
-   -4.64807         -1.96408   2.68399
-   -0.0953369        1.60016   1.6955
-   10.2803          12.2929    2.01254
-   -4.36029         -3.74619   0.614105
-% predictions with error > 10: 0.002404463431145972
+    -5.49203        -4.63727   0.854767
+    -5.07843        -4.63727   0.441162
+    -1.44031         1.60016   3.04047
+    -4.89633        -2.85513   2.0412
+    -6.91086        -6.41937   0.491486
+    -9.05573        -6.41937   2.63635
+    -3.61444        -0.181946  3.4325
+    -5.38669        -2.85513   2.53156
+     3.07977         5.1644    2.08463
+    -5.44086        -1.07303   4.36783
+    -4.92017        -1.96408   2.95609
+     4.99747         7.83759   2.84012
+    -2.62198         0.709106  3.33109
+    -8.58295        -8.20151   0.381439
+    -5.99945        -2.85513   3.14432
+    -4.67883         1.60016   6.27899
+    -6.94748        -7.31042   0.362946
+    -6.00467        -3.74619   2.25848
+     0.151215        2.49124   2.34003
+    -2.98569         2.49124   5.47693
+% predictions with error > 5: 0.07822676658029273
+Time elapsed: 78.9375569820404 seconds
 
 RUNNING EXPERIMENT 2...
 Parsing data...
 Processed db1/S7_E3_A1_angles.csv
 Generating training, validation, and testing datasets...
 Training model...
-Epoch 1/10
-4151/4151 [==============================] - 7s 2ms/step - loss: 0.0246 - mean_absolute_error: 0.0554
-Epoch 2/10
-4151/4151 [==============================] - 6s 2ms/step - loss: 5.7887e-04 - mean_absolute_error: 0.0181
-Epoch 3/10
-4151/4151 [==============================] - 6s 2ms/step - loss: 4.6379e-04 - mean_absolute_error: 0.0162
-Epoch 4/10
-4151/4151 [==============================] - 6s 1ms/step - loss: 3.8460e-04 - mean_absolute_error: 0.0148
-Epoch 5/10
-4151/4151 [==============================] - 6s 1ms/step - loss: 3.2798e-04 - mean_absolute_error: 0.0138
-Epoch 6/10
-4151/4151 [==============================] - 6s 1ms/step - loss: 2.9196e-04 - mean_absolute_error: 0.0130
-Epoch 7/10
-4151/4151 [==============================] - 6s 1ms/step - loss: 2.6975e-04 - mean_absolute_error: 0.0125
-Epoch 8/10
-4151/4151 [==============================] - 6s 1ms/step - loss: 2.5378e-04 - mean_absolute_error: 0.0121
-Epoch 9/10
-4151/4151 [==============================] - 6s 1ms/step - loss: 2.3372e-04 - mean_absolute_error: 0.0117
-Epoch 10/10
-4151/4151 [==============================] - 6s 1ms/step - loss: 2.2414e-04 - mean_absolute_error: 0.0114
 Testing model...
 Generating predictions...
-loss: 0.0001561078242957592
-mean_absolute_error: 0.009419895708560944
-  Predictions    Ground Truth     Error
--------------  --------------  --------
-     29.126          30.6122   1.48618
-     14.276          12.791    1.48506
-     37.7746         47.2518   9.47717
-     15.2171         15.4642   0.247116
-     25.173          23.4837   1.6893
-     25.225          23.4837   1.74127
-     37.4987         41.3049   3.80618
-     39.0635         40.4139   1.35034
-     35.4771         31.5033   3.97388
-     30.2058         26.1569   4.04886
-     31.3677         36.2723   4.90457
-     24.2142         23.4837   0.730469
-     27.1913         24.3748   2.81656
-     10.4874         10.1178   0.369583
-     35.7402         37.7407   2.00043
-     28.3759         27.048    1.32791
-      9.91411         7.92888  1.98523
-     20.8579         19.9195   0.938446
-     36.5154         37.7407   1.22531
-     37.6444         42.196    4.55154
-% predictions with error > 10: 0.004427477467302175
+loss: 0.0001638375542825088
+mean_absolute_error: 0.009341922588646412
+  Predictions    Ground Truth       Error
+-------------  --------------  ----------
+      22.8312         23.0517  0.220551
+      41.7054         37.7407  3.96475
+      27.043          27.048   0.00497437
+      49.0177         47.5423  1.47537
+      29.0758         29.7211  0.645355
+      23.4534         22.5926  0.860779
+      51.1235         52.8887  1.76523
+      28.8012         26.1569  2.64426
+      62.5636         67.2869  4.7233
+      49.0177         47.1893  1.82837
+      34.3781         35.9585  1.58041
+      27.7122         31.5033  3.79102
+      48.0064         51.1066  3.10016
+      11.8564         11.8999  0.0435028
+      29.6805         30.6122  0.931671
+      20.3406         19.9195  0.421097
+      30.7955         34.1764  3.38098
+      35.4876         35.3036  0.184021
+      19.8185         19.9195  0.101028
+      14.4041         11.8999  2.50421
+% predictions with error > 5: 0.061826560346969664
+Time elapsed: 79.66055035591125 seconds
 
 RUNNING EXPERIMENT 3...
 Parsing data...
 Processed db1/S7_E3_A1_angles.csv
 Generating training, validation, and testing datasets...
 Training model...
-Epoch 1/10
-4151/4151 [==============================] - 7s 2ms/step - loss: 0.0158 - mean_absolute_error: 0.0468
-Epoch 2/10
-4151/4151 [==============================] - 6s 2ms/step - loss: 8.8628e-04 - mean_absolute_error: 0.0226
-Epoch 3/10
-4151/4151 [==============================] - 6s 2ms/step - loss: 6.3333e-04 - mean_absolute_error: 0.0191
-Epoch 4/10
-4151/4151 [==============================] - 6s 2ms/step - loss: 4.8455e-04 - mean_absolute_error: 0.0167
-Epoch 5/10
-4151/4151 [==============================] - 6s 2ms/step - loss: 4.0476e-04 - mean_absolute_error: 0.0153
-Epoch 6/10
-4151/4151 [==============================] - 6s 2ms/step - loss: 3.5469e-04 - mean_absolute_error: 0.0143
-Epoch 7/10
-4151/4151 [==============================] - 6s 2ms/step - loss: 3.2581e-04 - mean_absolute_error: 0.0138
-Epoch 8/10
-4151/4151 [==============================] - 6s 2ms/step - loss: 2.9776e-04 - mean_absolute_error: 0.0131
-Epoch 9/10
-4151/4151 [==============================] - 6s 2ms/step - loss: 2.7107e-04 - mean_absolute_error: 0.0125
-Epoch 10/10
-4151/4151 [==============================] - 7s 2ms/step - loss: 2.7405e-04 - mean_absolute_error: 0.0126
 Testing model...
 Generating predictions...
-loss: 0.00019785740005318075
-mean_absolute_error: 0.010432966984808445
-  Predictions    Ground Truth      Error
--------------  --------------  ---------
-      40.3569         45.0411  4.68417
-      42.8475         44.2441  1.39661
-      69.1204         70.6017  1.48129
-      53.956          55.9956  2.03961
-      31.6239         33.1737  1.54977
-      45.7841         46.8668  1.0827
-      34.6181         35.9123  1.29425
-      40.5191         40.4767  0.0423889
-      23.3225         20.3934  2.92908
-      34.5263         34.6715  0.145203
-      32.647          33.1737  0.526703
-      41.0871         45.0411  3.95392
-      65.9556         66.0373  0.0817261
-      28.9288         28.6093  0.319519
-      36.5498         38.6509  2.1011
-      41.6155         43.2153  1.59982
-     -16.2391        -22.5119  6.27277
-      37.0649         42.3024  5.23758
-      45.2958         51.4312  6.13541
-      44.2752         44.1282  0.147003
-% predictions with error > 10: 0.005692471029388511
+loss: 0.0005961056449450552
+mean_absolute_error: 0.021222949028015137
+  Predictions    Ground Truth    Error
+-------------  --------------  -------
+     40.7445          48.0407  7.2962
+     30.7304          33.1737  2.44327
+     33.107           34.9994  1.89243
+     31.9624          34.9994  3.03708
+     35.8025          38.4803  2.6778
+     44.9735          52.3441  7.37057
+     43.4252          48.6926  5.26736
+     29.4533          32.2608  2.80753
+     32.4386          34.0865  1.64798
+     67.3653          70.6561  3.29077
+     62.586           67.863   5.27707
+     55.9438          53.1383  2.80548
+     30.7621          34.0865  3.32443
+     25.7978          33.1737  7.37582
+     32.3388          37.7381  5.39923
+      6.87897         12.1081  5.22914
+     26.7591          28.6093  1.85016
+     29.2178          32.2608  3.04294
+     43.7709          49.6055  5.83459
+     48.254           53.257   5.00293
+% predictions with error > 5: 0.3602069168040841
+Time elapsed: 76.23202180862427 seconds
 
 RUNNING EXPERIMENT 4...
 Parsing data...
 Processed db1/S7_E3_A1_angles.csv
 Generating training, validation, and testing datasets...
 Training model...
-Epoch 1/10
-4151/4151 [==============================] - 6s 1ms/step - loss: 0.0246 - mean_absolute_error: 0.1098
-Epoch 2/10
-4151/4151 [==============================] - 5s 1ms/step - loss: 0.0198 - mean_absolute_error: 0.0982
-Epoch 3/10
-4151/4151 [==============================] - 5s 1ms/step - loss: 0.0172 - mean_absolute_error: 0.0907
-Epoch 4/10
-4151/4151 [==============================] - 5s 1ms/step - loss: 0.0158 - mean_absolute_error: 0.0869
-Epoch 5/10
-4151/4151 [==============================] - 5s 1ms/step - loss: 0.0149 - mean_absolute_error: 0.0842
-Epoch 6/10
-4151/4151 [==============================] - 5s 1ms/step - loss: 0.0140 - mean_absolute_error: 0.0817
-Epoch 7/10
-4151/4151 [==============================] - 5s 1ms/step - loss: 0.0132 - mean_absolute_error: 0.0795
-Epoch 8/10
-4151/4151 [==============================] - 5s 1ms/step - loss: 0.0126 - mean_absolute_error: 0.0773
-Epoch 9/10
-4151/4151 [==============================] - 5s 1ms/step - loss: 0.0121 - mean_absolute_error: 0.0755
-Epoch 10/10
-4151/4151 [==============================] - 5s 1ms/step - loss: 0.0117 - mean_absolute_error: 0.0742
 Testing model...
 Generating predictions...
-loss: 0.012230399064719677
-mean_absolute_error: 0.07597524672746658
+loss: 0.011298103258013725
+mean_absolute_error: 0.07198644429445267
   Predictions    Ground Truth      Error
 -------------  --------------  ---------
-     48.7323        34.0866    14.6458
-     34.644         39.5638     4.91984
-     36.6993        37.7381     1.03877
-      8.19281        0.214333   7.97848
-     37.0096        21.3063    15.7033
-     22.1795        21.3063     0.873283
-     32.6826        34.0866     1.404
-     37.4553        35.9123     1.54297
-     35.7375        41.3896     5.65205
-     32.612         32.4972     0.114815
-     38.9691        37.7381     1.23108
-     47.1974        45.0411     2.15636
-     36.5224        23.5801    12.9423
-     50.4768        42.3024     8.17439
-     40.0454        50.5183    10.4729
-     28.3905        39.5638    11.1733
-     26.5093        33.1737     6.66431
-     33.4044        32.2608     1.14358
-     34.8165        34.9994     0.182968
-     32.4569        36.9682     4.51126
-% predictions with error > 10: 0.20678126905961283
+      46.505         51.4312    4.92625
+      22.8896        25.3871    2.49744
+      10.4938         5.78734   4.70646
+      38.9283        22.0572   16.8712
+      49.3642        50.5183    1.15414
+      37.8267        33.1737    4.65306
+      52.52          53.257     0.736938
+      35.0903        35.9123    0.822014
+      31.488         38.6509    7.16293
+      28.6583        37.7381    9.07975
+      17.9509        22.4843    4.53335
+      35.1813        34.0866    1.09479
+      49.3642        50.5183    1.15414
+      34.7575        36.8252    2.06771
+      37.5094        43.2153    5.70587
+      37.5849        41.3896    3.80463
+      35.1542        36.8252    1.67101
+      24.1749        38.6509   14.4761
+      26.9936        23.132     3.86157
+      40.8018        35.9123    4.88946
+% predictions with error > 5: 0.43870428516569154
+Time elapsed: 63.9413697719574 seconds
+
+RUNNING EXPERIMENT 5...
+Parsing data...
+Processed db1/S10_E3_A1_angles.csv
+Processed db1/S25_E3_A1_angles.csv
+Processed db1/S4_E3_A1_angles.csv
+Processed db1/S21_E3_A1_angles.csv
+Processed db1/S14_E3_A1_angles.csv
+Processed db1/S11_E3_A1_angles.csv
+Processed db1/S1_E3_A1_angles.csv
+Processed db1/S24_E3_A1_angles.csv
+Processed db1/S20_E3_A1_angles.csv
+Processed db1/S5_E3_A1_angles.csv
+Processed db1/S15_E3_A1_angles.csv
+Processed db1/S2_E3_A1_angles.csv
+Processed db1/S27_E3_A1_angles.csv
+Processed db1/S19_E3_A1_angles.csv
+Processed db1/S9_E3_A1_angles.csv
+Processed db1/S12_E3_A1_angles.csv
+Processed db1/S16_E3_A1_angles.csv
+Processed db1/S23_E3_A1_angles.csv
+Processed db1/S6_E3_A1_angles.csv
+Processed db1/S26_E3_A1_angles.csv
+Processed db1/S18_E3_A1_angles.csv
+Processed db1/S3_E3_A1_angles.csv
+Processed db1/S13_E3_A1_angles.csv
+Processed db1/S8_E3_A1_angles.csv
+Processed db1/S17_E3_A1_angles.csv
+Processed db1/S7_E3_A1_angles.csv
+Processed db1/S22_E3_A1_angles.csv
+Generating training, validation, and testing datasets...
+Training model...
+Testing model...
+Generating predictions...
+loss: 0.000628291629254818
+mean_absolute_error: 0.018528731539845467
+  Predictions    Ground Truth      Error
+-------------  --------------  ---------
+    40.9256         36.492      4.43362
+     4.64659         3.21169    1.43491
+    29.094          27.1127     1.98135
+    33.2486         25.7992     7.44934
+    42.383          35.7847     6.59827
+    22.9886         23.4781     0.489471
+     4.69066         3.27142    1.41924
+    65.0465         70.6429     5.59637
+     0.710327       -2.07494    2.78526
+     8.90549         8.46033    0.44516
+    24.5423         23.2185     1.32379
+    13.8513         11.5659     2.2854
+    -0.749985      -14.2973    13.5473
+    26.4861         26.1512     0.334808
+     2.55176        -3.85706    6.40881
+     0.86676        -1.73441    2.60117
+     0.358459       -5.30133    5.65979
+     4.11949        -0.268799   4.38829
+     0.799774       -3.74619    4.54596
+    31.888          33.2974     1.40945
+% predictions with error > 5: 0.2575973052320331
+Time elapsed: 3478.818545818329 seconds

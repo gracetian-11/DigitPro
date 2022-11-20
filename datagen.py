@@ -1,7 +1,8 @@
 import pandas as pd
 import numpy as np
-import normalize
 import math
+
+import util
 
 class Parse:
     def __init__(self, files, window_size, excluded_features, label_indices, offset = 1):
@@ -31,7 +32,7 @@ class Parse:
             df = pd.read_csv(file).drop(columns=['Unnamed: 0', '5'])
             df = df.drop(columns=excluded_features)
             data = np.array(df, dtype=np.float32)
-            scaled_data, data_min, data_max = normalize.scale_to_range(data, -1, 1)
+            scaled_data, data_min, data_max = util.scale_to_range(data, -1, 1)
             self.file_norm_vals[file] = (data_min, data_max) 
             for row in range(len(data) - (window_size + offset)):
                 features = np.delete(scaled_data[row:row + window_size], label_indices, 1)

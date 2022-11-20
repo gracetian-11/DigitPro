@@ -1,6 +1,8 @@
+import os
+
+import util
 import datagen
 import models
-import os
 
 """
 EXPERIMENT 1
@@ -15,6 +17,8 @@ def experiment1():
     NUM_EPOCHS = 10  # specify number of epochs to train over
     BATCH_SIZE = 32  # specify batch size 
 
+    timer = util.TimeTracker()
+
     file = 'db1/S10_E3_A1_angles.csv'
     dataset = datagen.Parse([file], WINDOW_SIZE, EXCLUDED_FEATURES, [LABEL])
 
@@ -22,6 +26,10 @@ def experiment1():
     model.train()
     model.test()
     model.displayResults()
+
+    timer.endTimer()
+    print("Time elapsed: " + str(timer.elapsed) + " seconds")
+    return model
 
 
 """
@@ -37,6 +45,8 @@ def experiment2():
     NUM_EPOCHS = 10  # specify number of epochs to train over
     BATCH_SIZE = 32  # specify batch size
 
+    timer = util.TimeTracker()
+
     file = 'db1/S7_E3_A1_angles.csv'
     dataset = datagen.Parse([file], WINDOW_SIZE, EXCLUDED_FEATURES, [LABEL])
 
@@ -44,6 +54,10 @@ def experiment2():
     model.train()
     model.test()
     model.displayResults()
+
+    timer.endTimer()
+    print("Time elapsed: " + str(timer.elapsed) + " seconds")
+    return model
 
 
 """
@@ -59,6 +73,8 @@ def experiment3():
     NUM_EPOCHS = 10  # specify number of epochs to train over
     BATCH_SIZE = 32  # specify batch size
 
+    timer = util.TimeTracker()
+
     file = 'db1/S7_E3_A1_angles.csv'
     dataset = datagen.Parse([file], WINDOW_SIZE, EXCLUDED_FEATURES, [LABEL])
 
@@ -66,6 +82,10 @@ def experiment3():
     model.train()
     model.test()
     model.displayResults()
+
+    timer.endTimer()
+    print("Time elapsed: " + str(timer.elapsed) + " seconds")
+    return model
 
 
 """
@@ -81,6 +101,8 @@ def experiment4():
     NUM_EPOCHS = 10 # specify number of epochs to train over
     BATCH_SIZE = 32  # specify batch size 
 
+    timer = util.TimeTracker()
+
     file = 'db1/S7_E3_A1_angles.csv'
     dataset = datagen.Parse([file], WINDOW_SIZE, EXCLUDED_FEATURES, [LABEL])
 
@@ -89,8 +111,46 @@ def experiment4():
     model.test()
     model.displayResults()
 
+    timer.endTimer()
+    print("Time elapsed: " + str(timer.elapsed) + " seconds")
+    return model
 
-experiment1()
-experiment2()
-experiment3()
-experiment4()
+
+"""
+EXPERIMENT 5
+"""
+
+def experiment5():
+    print("\nRUNNING EXPERIMENT 5...")
+
+    EXCLUDED_FEATURES = []
+    LABEL = 14  # sensor 17
+    WINDOW_SIZE = 50  # number of time frames for one prediction
+    NUM_EPOCHS = 10  # specify number of epochs to train over
+    BATCH_SIZE = 32  # specify batch size 
+
+    timer = util.TimeTracker()
+
+    files = os.listdir("db1")
+    files = ["db1/" + f for f in files]
+    dataset = datagen.Parse(files, WINDOW_SIZE, EXCLUDED_FEATURES, [LABEL])
+
+    model = models.MultiStepDense(dataset, BATCH_SIZE, NUM_EPOCHS)
+    model.train()
+    model.test()
+    model.displayResults()
+
+    timer.endTimer()
+    print("Time elapsed: " + str(timer.elapsed) + " seconds")
+    return model
+
+
+"""
+RUN EXPERIMENTS
+"""
+
+util.run_phase1_experiment(experiment1, "phase1/experiment1.txt", 10, 5)
+util.run_phase1_experiment(experiment2, "phase1/experiment2.txt", 10, 5)
+util.run_phase1_experiment(experiment3, "phase1/experiment3.txt", 10, 5)
+util.run_phase1_experiment(experiment4, "phase1/experiment4.txt", 10, 5)
+# util.run_phase1_experiment(experiment5, "phase1/experiment5.txt", 5, 5)

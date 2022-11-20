@@ -1,5 +1,3 @@
-import numpy as np
-import h5py
 import scipy.io
 import pandas as pd
 import os

@@ -1,6 +1,7 @@
-'''
+"""
 Module for data visualization in db1.
-'''
+"""
+
 import os
 import pandas as pd
 import matplotlib.pyplot as plt

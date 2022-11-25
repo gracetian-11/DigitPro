@@ -144,13 +144,34 @@ def experiment5():
     print("Time elapsed: " + str(timer.elapsed) + " seconds")
     return model
 
+# def experiment6(): 
+#     print("\nRUNNING EXPERIMENT 6...")
+#     EXCLUDED_FEATURES = []
+#     LABEL = 14  # sensor 17
+#     WINDOW_SIZE = 50  # number of time frames for one prediction
+#     NUM_EPOCHS = 10  # specify number of epochs to train over
+#     BATCH_SIZE = 32  # specify batch size 
 
+#     experiment1_model = experiment1()
+
+#     files = os.listdir("db1")
+#     files = ["db1/" + f for f in files if f != 'S10_E3_A1_angles.csv']
+
+#     for file in files: 
+#         print(file)
+#         dataset = datagen.Parse(file, WINDOW_SIZE, EXCLUDED_FEATURES, [LABEL])
+#         experiment1_model.model.evaluate(dataset.testing_features, dataset.testing_labels, batch_size=BATCH_SIZE, verbose=0)
+#         experiment1_model.predict(dataset.testing_features, verbose=0)
+
+
+#     return experiment1_model
 """
 RUN EXPERIMENTS
 """
 
-util.run_phase1_experiment(experiment1, "phase1/experiment1.txt", 10, 5)
-util.run_phase1_experiment(experiment2, "phase1/experiment2.txt", 10, 5)
-util.run_phase1_experiment(experiment3, "phase1/experiment3.txt", 10, 5)
-util.run_phase1_experiment(experiment4, "phase1/experiment4.txt", 10, 5)
+# util.run_phase1_experiment(experiment1, "phase1/experiment1.txt", 10, 5)
+# util.run_phase1_experiment(experiment2, "phase1/experiment2.txt", 10, 5)
+# util.run_phase1_experiment(experiment3, "phase1/experiment3.txt", 10, 5)
+# util.run_phase1_experiment(experiment4, "phase1/experiment4.txt", 10, 5)
 # util.run_phase1_experiment(experiment5, "phase1/experiment5.txt", 5, 5)
+# experiment6()

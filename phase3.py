@@ -1,9 +1,8 @@
-import os
-import util
+import sys
+
 import datagen
 import models
-import tensorflow as tf
-import tensorflow_probability as tfd
+import util
 
 """
 EXPERIMENT 1
@@ -61,5 +60,17 @@ def experiment2():
     print("Time elapsed: " + str(timer.elapsed) + " seconds")
     return model
 
-# experiment1()
+
+"""
+RUN EXPERIMENTS
+"""
+
+file = "phase3/experiment1.txt"
+sys.stdout = open(file, "w")
+experiment1()
+sys.stdout.close()
+
+file = "phase3/experiment2.txt"
+sys.stdout = open(file, "w")
 experiment2()
+sys.stdout.close()

@@ -90,6 +90,8 @@ class MixtureDensity:
         self.bounded_error_percentages = {}
         for margin in error_margins:
             self.bounded_error_percentages[margin] = 0
+        self.mean_squared_error = 0
+        self.mean_absolute_error = 0
 
         self.model = tf.keras.Sequential([
             # Shape: (time, features) => (time*features)
@@ -126,6 +128,9 @@ class MixtureDensity:
             for mu in range(len(self.mus[p])):
                 curr_prediction += self.mus[p][mu] * self.pis[p][mu]
 
+            self.mean_squared_error += abs(curr_prediction - self.dataset.testing_labels[p][0]) ** 2
+            self.mean_absolute_error += abs(curr_prediction - self.dataset.testing_labels[p][0])
+
             unscaled_prediction = util.unscale_from_range(curr_prediction, norm_vals[0], norm_vals[1], -1, 1)
             self.unscaled_predictions.append(unscaled_prediction)
 
@@ -139,7 +144,13 @@ class MixtureDensity:
         for error_margin in self.bounded_error_percentages.keys():
             self.bounded_error_percentages[error_margin] /= len(self.predictions)
 
+        self.mean_squared_error /= len(self.predictions)
+        self.mean_absolute_error /= len(self.predictions)
+
     def displayResults(self, verbose=True, num_to_display=20):
+        print("mean_squared_error: " + str(self.mean_squared_error))
+        print("mean_absolute_error: " + str(self.mean_absolute_error))
+
         # display prediction, ground truth, and error for num_to_display predictions
         if verbose:
             display_data = []

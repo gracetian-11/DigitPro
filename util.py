@@ -22,6 +22,51 @@ def unscale_from_range(data, min_val, max_val, left_bound, right_bound):
     return (data - left_bound) / (right_bound - left_bound) * (max_val - min_val) + min_val
 
 
+"""
+compares results from model and baseline predictions to ground truth, 
+writing results to the specified file
+
+ground_truth (list): correct labels
+results (dict): dictionary mapping to type of result (e.g. model, baseline) to its list of predictions
+error margins (list): list of integer values representing acceptable errors to track
+"""
+def compare_baselines(ground_truth, results, error_margins):
+    headers = ["", "MEAN ERROR FROM GROUND TRUTH", "STD OF ERRORS FROM GROUND TRUTH"]
+    headers.extend(["FRACTION OF PREDICTIONS W ERROR > " + str(e) for e in sorted(error_margins)])
+
+    data = []
+    for type in results.keys():
+        if len(ground_truth) != len(results[type]):
+            return
+
+        result = results[type]
+
+        bounded_error_percentages = {}
+        for e in error_margins:
+            bounded_error_percentages[e] = 0
+
+        errors = []
+        for i in range(len(ground_truth)):
+            error = abs(ground_truth[i] - result[i])
+            errors.append(error)
+            for e in error_margins:
+                if error > e:
+                    bounded_error_percentages[e] += 1
+
+        errors_mean = np.mean(errors)
+        errors_std = np.std(errors)
+        for e in bounded_error_percentages.keys():
+            bounded_error_percentages[e] /= len(ground_truth)
+
+        comparisons = [type, errors_mean, errors_std]
+        comparisons.extend([bounded_error_percentages[e] for e in sorted(error_margins)])
+        data.append(comparisons)
+
+    print(tabulate(data, headers=headers, numalign="right"))
+
+    return headers, data
+
+
 def run_phase1_experiment(function, file, iterations):
     experiment = str(function).split(" ")[1]
 

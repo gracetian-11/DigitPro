@@ -4,9 +4,10 @@ import pandas as pd
 import sys
 from tabulate import tabulate
 
-import util
+import baselines
 import datagen
 import models
+import util
 
 """
 EXPERIMENT 1
@@ -255,6 +256,45 @@ def experiment6():
 
 
 """
+EXPERIMENT 7
+"""
+
+def experiment7():
+    # file = "phase1/experiment7.txt"
+    # sys.stdout = open(file, "w")
+
+    print("\nRUNNING EXPERIMENT 7...")
+
+    EXCLUDED_FEATURES = []
+    LABEL = 14  # sensor 17
+    WINDOW_SIZE = 50  # number of time frames for one prediction
+    NUM_EPOCHS = 10  # specify number of epochs to train over
+    BATCH_SIZE = 32  # specify batch size
+    ERROR_MARGINS = [1, 3, 5]
+
+    timer = util.TimeTracker()
+
+    file = 'db1/S10_E3_A1_angles.csv'
+    dataset = datagen.Parse([file], WINDOW_SIZE, EXCLUDED_FEATURES, [LABEL])
+    
+    base = baselines.Baselines(dataset)
+    rand_baseline = base.getRandomSelection()
+    nn_baseline = base.getNearestNeighbor()
+
+    model = models.MultiStepDense(dataset, BATCH_SIZE, NUM_EPOCHS, ERROR_MARGINS)
+    model.train()
+    model.test()
+    
+    results = {"MODEL": model.predictions, "RANDOM": rand_baseline, "NEAREST NEIGHBOR": nn_baseline}
+    util.compare_baselines(ground_truth=dataset.testing_labels, results=results, error_margins=ERROR_MARGINS)
+
+    timer.endTimer()
+    print("Time elapsed: " + str(timer.elapsed) + " seconds")
+    # sys.stdout.close()
+
+    return model
+
+"""
 RUN EXPERIMENTS
 """
 
@@ -264,4 +304,4 @@ RUN EXPERIMENTS
 # util.run_phase1_experiment(experiment4, "phase1/experiment4.txt", 10)
 # util.run_phase1_experiment(experiment5, "phase1/experiment5.txt", 1)
 # experiment6()
- 
+# experiment7()

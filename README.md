@@ -15,8 +15,7 @@ Experiment 4: We test if our model performs well given amputation of all fingers
 
 Experiment 5: We want to determine if a model will perform well if it trained on different subjects at once. Our dataset is composed of all windows of 50 time frames over all subjects in db1. We train, test, and evaluate the network from Experiment 1 on this dataset.
 
-Experiment 6: 
-This goal for this experiment is to validate our expectation that, due to different hand structures among individuals, a model trained on one individual will not perform as well on others. We train the model on subject 10 with the same parameters as Experiment 1 evaluate its performance on all other subjects in db1.
+Experiment 6: This goal for this experiment is to validate our expectation that, due to different hand structures among individuals, a model trained on one individual will not perform as well on others. We train the model on subject 10 with the same parameters as Experiment 1 evaluate its performance on all other subjects in db1.
 
 ## Phase 2:
 

@@ -1,0 +1,63 @@
+EXPERIMENT5
+
+RUNNING EXPERIMENT 5...
+Parsing data...
+Processed db1/S10_E3_A1_angles.csv
+Processed db1/S25_E3_A1_angles.csv
+Processed db1/S4_E3_A1_angles.csv
+Processed db1/S21_E3_A1_angles.csv
+Processed db1/S14_E3_A1_angles.csv
+Processed db1/S11_E3_A1_angles.csv
+Processed db1/S1_E3_A1_angles.csv
+Processed db1/S24_E3_A1_angles.csv
+Processed db1/S20_E3_A1_angles.csv
+Processed db1/S5_E3_A1_angles.csv
+Processed db1/S15_E3_A1_angles.csv
+Processed db1/S2_E3_A1_angles.csv
+Processed db1/S27_E3_A1_angles.csv
+Processed db1/S19_E3_A1_angles.csv
+Processed db1/S9_E3_A1_angles.csv
+Processed db1/S12_E3_A1_angles.csv
+Processed db1/S16_E3_A1_angles.csv
+Processed db1/S23_E3_A1_angles.csv
+Processed db1/S6_E3_A1_angles.csv
+Processed db1/S26_E3_A1_angles.csv
+Processed db1/S18_E3_A1_angles.csv
+Processed db1/S3_E3_A1_angles.csv
+Processed db1/S13_E3_A1_angles.csv
+Processed db1/S8_E3_A1_angles.csv
+Processed db1/S17_E3_A1_angles.csv
+Processed db1/S7_E3_A1_angles.csv
+Processed db1/S22_E3_A1_angles.csv
+Generating training, validation, and testing datasets...
+Training model...
+Testing model...
+Generating predictions...
+loss: 0.0007790804957039654
+mean_absolute_error: 0.022243909537792206
+  Predictions    Ground Truth      Error
+-------------  --------------  ---------
+    24.2317          31.1692    6.93747
+    -2.52286         -3.15408   0.631226
+    -8.3208          -6.09569   2.22511
+    31.4487          33.8188    2.37006
+    -5.24117         -1.25473   3.98643
+    16.0703          34.4565   18.3862
+    46.97            43.2134    3.75659
+    40.1452          32.947     7.19821
+    -2.76495          1.82982   4.59477
+     0.797821         4.99382   4.196
+    -1.16412         -6.34293   5.1788
+    19.9777          26.6903    6.71262
+    -5.76501         -1.96408   3.80093
+   -14.5556          -9.75665   4.79898
+    27.8526          34.8251    6.9725
+     9.47525          9.68634   0.21109
+    20.0247          25.7992    5.77448
+     6.95584          7.384     0.428162
+    -0.251709         6.05548   6.30719
+    -0.595978         4.10277   4.69875
+fraction of predictions with error > 1: 0.8905527718393388
+fraction of predictions with error > 3: 0.6305471437391585
+fraction of predictions with error > 5: 0.35925843480013947
+Time elapsed: 2737.9787101745605 seconds

@@ -30,7 +30,7 @@ ground_truth (list): correct labels
 results (dict): dictionary mapping to type of result (e.g. model, baseline) to its list of predictions
 error margins (list): list of integer values representing acceptable errors to track
 """
-def compare_baselines(ground_truth, results, error_margins):
+def compare_baselines(ground_truth, unscaled_ground_truth, results, unscaled_results, error_margins):
     headers = ["", "MEAN ERROR FROM GROUND TRUTH", "STD OF ERRORS FROM GROUND TRUTH"]
     headers.extend(["FRACTION OF PREDICTIONS W ERROR > " + str(e) for e in sorted(error_margins)])
 
@@ -49,8 +49,9 @@ def compare_baselines(ground_truth, results, error_margins):
         for i in range(len(ground_truth)):
             error = abs(ground_truth[i] - result[i])
             errors.append(error)
+            unscaled_error = abs(unscaled_ground_truth[i] - unscaled_results[type][i])
             for e in error_margins:
-                if error > e:
+                if unscaled_error > e:
                     bounded_error_percentages[e] += 1
 
         errors_mean = np.mean(errors)

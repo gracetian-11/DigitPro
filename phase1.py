@@ -260,8 +260,8 @@ EXPERIMENT 7
 """
 
 def experiment7():
-    # file = "phase1/experiment7.txt"
-    # sys.stdout = open(file, "w")
+    file = "phase1/experiment7.txt"
+    sys.stdout = open(file, "w")
 
     print("\nRUNNING EXPERIMENT 7...")
 
@@ -278,19 +278,23 @@ def experiment7():
     dataset = datagen.Parse([file], WINDOW_SIZE, EXCLUDED_FEATURES, [LABEL])
     
     base = baselines.Baselines(dataset)
-    rand_baseline = base.getRandomSelection()
-    nn_baseline = base.getNearestNeighbor()
+    rand_baseline, unscaled_rand_baseline = base.getRandomSelection()
 
     model = models.MultiStepDense(dataset, BATCH_SIZE, NUM_EPOCHS, ERROR_MARGINS)
     model.train()
     model.test()
     
-    results = {"MODEL": model.predictions, "RANDOM": rand_baseline, "NEAREST NEIGHBOR": nn_baseline}
-    util.compare_baselines(ground_truth=dataset.testing_labels, results=results, error_margins=ERROR_MARGINS)
+    results = {"MODEL": model.predictions, "RANDOM": rand_baseline}
+    unscaled_results = {"MODEL": model.unscaled_predictions, "RANDOM": unscaled_rand_baseline}
+    util.compare_baselines(ground_truth=dataset.testing_labels, 
+                           unscaled_ground_truth=model.unscaled_testing_labels,
+                           results=results, 
+                           unscaled_results=unscaled_results,
+                           error_margins=ERROR_MARGINS)
 
     timer.endTimer()
     print("Time elapsed: " + str(timer.elapsed) + " seconds")
-    # sys.stdout.close()
+    sys.stdout.close()
 
     return model
 

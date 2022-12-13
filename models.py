@@ -119,6 +119,7 @@ class MixtureDensity:
         self.sigs = np.apply_along_axis((lambda a: a[self.num_mixes:2*self.num_mixes]), 1, self.predictions)
         self.pis = np.apply_along_axis((lambda a: mdn.softmax(a[2*self.num_mixes:])), 1, self.predictions)
 
+        self.prediction_values = []
         self.unscaled_predictions = []
         self.unscaled_testing_labels = []
         for p in range(len(self.predictions)):
@@ -127,6 +128,7 @@ class MixtureDensity:
             curr_prediction = 0 
             for mu in range(len(self.mus[p])):
                 curr_prediction += self.mus[p][mu] * self.pis[p][mu]
+            self.prediction_values.append(curr_prediction)
 
             self.mean_squared_error += abs(curr_prediction - self.dataset.testing_labels[p][0]) ** 2
             self.mean_absolute_error += abs(curr_prediction - self.dataset.testing_labels[p][0])

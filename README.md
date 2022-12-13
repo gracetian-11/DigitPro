@@ -1,7 +1,7 @@
 # DigitPro
-Machine Learning for Prosthetic Finger Kinematics
+Evaluation of Machine Learning Methods to Predict Joint Angles for Finger Prosthetics
 
-## PHASE 1: 
+## Phase 1: 
 
 Phase 1 implements a multi-stage dense network to perform regression and predicts future sensor values. Results for each experiment can be found in the corresponding .txt file in the folder phase1. This network is composed of two fully connected layers with a tanh activation function with a mean squared error loss.
 
@@ -16,6 +16,8 @@ Experiment 4: We test if our model performs well given amputation of all fingers
 Experiment 5: We want to determine if a model will perform well if it trained on different subjects at once. Our dataset is composed of all windows of 50 time frames over all subjects in db1. We train, test, and evaluate the network from Experiment 1 on this dataset.
 
 Experiment 6: This goal for this experiment is to validate our expectation that, due to different hand structures among individuals, a model trained on one individual will not perform as well on others. We train the model on subject 10 with the same parameters as Experiment 1 evaluate its performance on all other subjects in db1.
+
+Experiment 7: We compare the results from Experiment 1 with a random baseline.
 
 ## Phase 2:
 
@@ -32,3 +34,5 @@ Phase 3 implements a Mixture Density Network to predict a mixture of normal dist
 Experiment 1: We use the MDN to predict a single normal distribution for the projected value for sensor 17.
 
 Experiment 2: This experiment expands on Experiment 1 by predicting a multiple distributions. We use the MDN to predict 5 normal distributions for the projected value for sensor 17.
+
+Experiment 3: We compare the results of Experiment 2 with a random baseline.
